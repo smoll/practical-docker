@@ -20,7 +20,7 @@ Link to presentation can be found [here](https://docs.google.com/presentation/d/
 0. When a code snippet is given, lines prefixed with `$` means they are entered on the command line, and the output is usually listed below it. Lines prefixed with `#` are comments about the code immediately below it.
 0. You have a working Docker daemon running on a Docker Machine VM (`docker ps` and `docker login` both succeed) -- if not, follow the directions in prerequisites.
 
-## Understanding the Dockerfile
+## hello-world
 
 Let's look at https://github.com/tutumcloud/hello-world
 
@@ -30,20 +30,6 @@ First we cloned the repo:
 $ cd ~/workspace
 $ git clone https://github.com/tutumcloud/hello-world
 $ cd hello-world
-
-# view the contents of the Dockerfile
-$ cat Dockerfile
-FROM alpine
-MAINTAINER support@tutum.co
-RUN apk --update add nginx php-fpm && \
-    mkdir -p /var/log/nginx && \
-    touch /var/log/nginx/access.log && \
-    mkdir -p /tmp/nginx && \
-    echo "clear_env = no" >> /etc/php/php-fpm.conf
-ADD www /www
-ADD nginx.conf /etc/nginx/
-EXPOSE 80
-CMD php-fpm -d variables_order="EGPCS" && (tail -F /var/log/nginx/access.log &) && exec nginx -g "daemon off;"
 ```
 
 From tutum's README, we have 2 ways of running the hello-world container -- running it directly from Docker Hub, or building it locally then running the image we build.
@@ -52,6 +38,8 @@ From tutum's README, we have 2 ways of running the hello-world container -- runn
 
 ```bash
 $ docker run -d -p 80 tutum/hello-world
+```
+```bash
 Unable to find image 'tutum/hello-world:latest' locally
 latest: Pulling from tutum/hello-world
 d6ead20d5571: Pull complete
@@ -106,9 +94,14 @@ It doesn't work because by default `-p` will automatically assign a random, free
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                   NAMES
 946dfbcc7693        tutum/hello-world   "/bin/sh -c 'php-fpm "   8 minutes ago       Up 8 minutes        0.0.0.0:32768->80/tcp   modest_jones
+```
 
+After we know the container ID,
+
+```bash
 $ docker kill 946dfbcc7693
 946dfbcc7693
+
 $ docker rm 946dfbcc7693
 946dfbcc7693
 
@@ -132,6 +125,8 @@ $ curl http://192.168.99.100:80
 # ...
 ```
 
+## Understanding the Dockerfile
+
 Let's continue our learning by building the image locally.
 
 ### Building a Dockerfile locally
@@ -141,6 +136,8 @@ Again, referring back to the tutum [README](https://github.com/tutumcloud/hello-
 ```bash
 # Build and tag our image
 $ docker build -t smoll/hello-world .
+```
+```bash
 Sending build context to Docker daemon 184.8 kB
 Step 1 : FROM alpine
 latest: Pulling from library/alpine
@@ -180,16 +177,20 @@ $ docker run -d -p 80:80 smoll/hello-world
 
 It should behave identically to the one we pulled from Docker Hub.
 
-We could even push it to Docker Hub under our own name, which automatically creates a Docker Hub repo for it too, if it doesn't yet exist (as long as we did `docker login` as mentioned above):
+We could even push it to Docker Hub under our own name:
 
 ```bash
 $ docker push smoll/hello-world
+```
+```bash
 The push refers to a repository [docker.io/smoll/hello-world] (len: 1)
 9f11a55bcea0: Pushed
 5aa618efafc1: Pushed
 c03e7ef207e3: Pushed
 b12c8cba2d70: Pushing [==================================================>]  16.9 kB
 ```
+
+Docker automatically creates a Docker Hub repo for it too, if it doesn't yet exist (as long as we did `docker login` as mentioned above.)
 
 ### Poking around in a running container
 
@@ -200,7 +201,10 @@ The way I usually do this is:
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
 0cb9dd2f6f01        smoll/hello-world   "/bin/sh -c 'php-fpm "   6 minutes ago       Up 6 minutes        0.0.0.0:80->80/tcp   serene_ardinghelli
+```
+After we know the container ID,
 
+```bash
 # Start an interactive shell
 $ docker exec -it 0cb9dd2f6f01 bash
 exec: "bash": executable file not found in $PATH
@@ -247,9 +251,12 @@ $ docker inspect 3c0f
 Or alternatively, exec in and echo them:
 
 ```bash
+# Can use short or long form of container id
 $ docker exec -it 3c0f3dac333e sh
+
 (inside the container)$ echo $HELLO
 true
+
 (inside the container)$ echo $BYE
 false
 ```
