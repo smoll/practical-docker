@@ -1,18 +1,27 @@
 # practical-docker
 
-Link to presentation can be found [here](https://docs.google.com/presentation/d/1L9d2QSmskAlNP9XUWznLpRJ7a5PqoJpFKNdr5w1f2oU/edit#slide=id.p).
+The original presentation can be found [here](https://docs.google.com/presentation/d/1L9d2QSmskAlNP9XUWznLpRJ7a5PqoJpFKNdr5w1f2oU/edit#slide=id.p).
 
 ## ToC
 
 * [Prerequisites](./PREREQUISITES.md)
-* [Understanding the Dockerfile](#understanding-the-dockerfile)
+
+### Getting started
+
 * [Running an image from Docker Hub](#running-an-image-from-docker-hub)
 * [Clean up a running container](#clean-up-a-running-container)
 * [Explicitly mapping ports](#explicitly-mapping-ports)
+
+### Digging deeper
+
 * [Building a Dockerfile locally](#building-a-dockerfile-locally)
 * [Poking around a running container](#poking-around-in-a-running-container)
 * [Setting env vars inside the container](#setting-env-vars-inside-the-container)
+
+### Using other tools
+
 * [Docker Compose](#docker-compose)
+* [docker-gc](#docker-gc)
 
 ## Assumptions
 
@@ -124,8 +133,6 @@ $ curl http://192.168.99.100:80
 	<title>Hello world!</title>
 # ...
 ```
-
-## Understanding the Dockerfile
 
 Let's continue our learning by building the image locally.
 
@@ -266,3 +273,7 @@ false
 Having to construct the Docker run commands by hand can get cumbersome, especially when there are a lot of env vars that need to be set. Instead we can use Docker Compose to define them in a simple YML format.
 
 TODO: fill this out
+
+## docker-gc
+
+TODO!
