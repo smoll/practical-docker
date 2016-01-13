@@ -95,7 +95,9 @@ $ curl http://192.168.99.100:80
 curl: (7) Failed to connect to 192.168.99.100 port 80: Connection refused
 ```
 
-It doesn't work because by default `-p` will automatically assign a random, free "ephemeral port" within a certain range. If you scrutinize the `docker ps` output above, it's actually listening on port `32768`. Let's take this opportunity to clean up the running container for now.
+It doesn't work because by default `-p` will automatically assign a random, free "ephemeral port" within a certain range. If you scrutinize the `docker ps` output above, it's actually listening on port `32768`. We could change our curl command to `curl http://192.168.99.100:32768` to reflect this, but even better, let's map the container port `80` to `80` in the host (Docker Machine VM).
+
+Let's also take this opportunity to clean up the running container for now.
 
 ### Clean up a running container
 
@@ -134,7 +136,7 @@ $ curl http://192.168.99.100:80
 # ...
 ```
 
-Let's continue our learning by building the image locally.
+Success!
 
 ### Building a Dockerfile locally
 
