@@ -8,7 +8,7 @@ Install Docker Toolbox, which comes with Docker Machine:
 
 Ensure that docker-machine (boot2docker/Vagrant/VirtualBox VM) is created and started:
 
-```
+```bash
 $ docker-machine ls
 NAME      ACTIVE   DRIVER       STATE     URL   SWARM   DOCKER    ERRORS
 default   -        virtualbox   Stopped                 Unknown
@@ -16,7 +16,7 @@ default   -        virtualbox   Stopped                 Unknown
 
 If it shows stopped (like above),
 
-```
+```bash
 $ docker-machine start default
 (default) Starting VM...
 Machine "default" was started.
@@ -27,21 +27,21 @@ NOTE: your docker-machine might be called "dev" or something else instead of "de
 
 For convenience, I have added the following to `~/.bash_profile` so it always exports the docker-machine envs to my current shell as soon as I open a new iTerm window:
 
-```
+```bash
 echo "exporting Docker Machine env to shell..."
 eval "$(docker-machine env default </dev/null)"
 ```
 
 Now, ensure that you can access the docker daemon:
 
-```
-docker ps
+```bash
+$ docker ps
 ```
 
 The best check for connectivity between the daemon and the Internet (sometimes it breaks when going from the office to home, etc.) is
 
-```
-docker login
+```bash
+$ docker login
 ```
 
 If this hangs, restart the docker machine.
