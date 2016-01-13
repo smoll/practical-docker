@@ -81,7 +81,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 946dfbcc7693        tutum/hello-world   "/bin/sh -c 'php-fpm "   3 minutes ago       Up 3 minutes        0.0.0.0:32768->80/tcp   modest_jones
 ```
 
-Let's see if we can use curl to hit the container. First, we find the IP of the Docker VM (since we are on a Mac, it isn't just `localhost`):
+Let's see if we can use curl to hit the container. First, we find the IP of the Docker Host (since we are on a Mac, it isn't just `localhost`):
 
 ```bash
 $ docker-machine ip default
