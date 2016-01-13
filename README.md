@@ -33,7 +33,7 @@ The original presentation can be found [here](https://docs.google.com/presentati
 
 Let's look at https://github.com/tutumcloud/hello-world
 
-First we cloned the repo:
+First we clone the repo:
 
 ```bash
 $ cd ~/workspace
@@ -67,11 +67,11 @@ There are a few things happening here:
 
 * Because we are on a clean boot2docker VM, there are no docker images on disk.
 
-* We asked for an image called `tutum/hello-world` and Docker inferred that it could simply pull it from Docker Hub, which it did.
+* We asked for an image called `tutum/hello-world`. Since it doesn't exist on disk, Docker pulled it from Docker Hub.
 
-* We didn't explicitly add a tag to the desired image (like `tutum/hello-world:1.0`) so Docker's default behavior is to pull the tag labeled `latest`.
+* We didn't explicitly add a tag to the desired image name (like `tutum/hello-world:1.0`) so Docker's default behavior is to pull the tag labeled `latest`.
 
-* We passed in a port flag `-p 80` which says to publish the internal container port of `80`
+* We passed in a port flag `-p 80` which says to publish the internal container port of `80`.
 
 Now the container should be up and running:
 
